@@ -1,0 +1,32 @@
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+      </div>
+      <div class="p-4 pt-5">
+        <h1><a href="index.html" class="logo">Rent-Mgr</a></h1>
+        <ul class="list-unstyled components mb-5">
+          <li class="active" *ngFor="let menu of menuList; let i = index">
+            <a
+              [attr.data-bs-target]="'#menu' + i"
+              data-bs-toggle="collapse" aria-expanded="false" 
+              [class]="menu.children ? 'dropdown-toggle' : ''"
+              ><span class="mr-3"><i [class]="'fa-solid fa-'+menu.icon"></i></span>{{menu.title}}</a
+            >
+            <ul class="collapse list-unstyled" [id]="'menu'+i" *ngIf="menu.children">
+              <li *ngFor="let subMenu of menu.children">
+                <a [routerLink]="'/user-space/'+subMenu.routerLink"><span class="mr-3"><i [class]="'fa-solid fa-'+subMenu.icon"></i></span>{{subMenu.title}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <router-outlet></router-outlet>
+    </div>
+</div>

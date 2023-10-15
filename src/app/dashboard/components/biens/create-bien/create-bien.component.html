@@ -1,0 +1,47 @@
+<div class="content-form container">
+  <div class="content-title">
+    <h2>Ajouter un nouveau bien</h2>
+  </div>
+  <div class="form-create">
+     <form [formGroup]="createForm">
+      <div class="form-group mb-3">
+        <label>Type Bien</label>
+        <select class="form-control" formControlName="type" [(ngModel)]="typeSelected" (change)="onSelectType($event)">
+          <option [value]="type" *ngFor="let type of typeBiens">{{type}}</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label>Loyer</label>
+        <input [ngClass]="{
+          'error' : (createForm.controls['loyer'].touched ||
+                      createForm.controls['loyer'].dirty ) &&
+                      createForm.controls['loyer'].errors && 
+                      createForm.controls['loyer'].errors['required'] }" type="number" class="form-control" formControlName="loyer" >
+      </div>
+      <div class="form-group mb-3">
+        <label>Surface</label>
+        <input [ngClass]="{
+          'error' : (createForm.controls['surface'].touched ||
+                      createForm.controls['surface'].dirty ) &&
+                      createForm.controls['surface'].errors && 
+                      createForm.controls['surface'].errors['required'] }" type="number" class="form-control" formControlName="surface" >
+      </div>
+      <div class="form-group mb-3">
+        <label>Adresse postale</label>
+        <input [ngClass]="{
+          'error' : (createForm.controls['adresse_postale'].touched ||
+                      createForm.controls['adresse_postale'].dirty ) &&
+                      createForm.controls['adresse_postale'].errors && 
+                      createForm.controls['adresse_postale'].errors['required'] }" type="text" class="form-control" formControlName="adresse_postale" >
+      </div>
+      <div class="content-button d-flex justify-content-end">
+          <input type="submit" value="Valider" *ngIf="!loading" (click)="onSubmit()" class="btn btn-btn btn-primary" />
+          <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
+      </div>
+     </form>
+  </div>
+
+</div>

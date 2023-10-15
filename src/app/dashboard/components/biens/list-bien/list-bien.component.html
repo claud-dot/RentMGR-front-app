@@ -1,0 +1,54 @@
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center mb-5">
+        <h2 class="heading-section">Liste de votre Biens</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="height: 590px;
+      overflow: auto;">
+        <div class="table-wrap">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Row </th>
+                <th>Type bien</th>
+                <th>Loyer</th>
+                <th>Surface (m²)</th>
+                <th>Adress postale</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!loading">
+              <tr class="alert" role="alert" *ngFor="let bien of listBien; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{bien.type}}</td>
+                <td>{{bien.loyer}}</td>
+                <td>{{bien.surface}}</td>
+                <td>{{bien.adresse_postale}}</td>
+                <td align="right">
+                  <a href="#" class="edit mr-3" aria-label="Edit">
+                    <span aria-hidden="true">
+                      <i class="fa-solid fa-pen"></i>
+                    </span>
+                  </a>
+                  <a href="#" class="trash mr-3" style="color: #dc3545;"  aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="text-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
