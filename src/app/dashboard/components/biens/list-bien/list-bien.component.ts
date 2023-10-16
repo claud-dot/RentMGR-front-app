@@ -42,6 +42,10 @@ export class ListBienComponent implements OnInit {
     this.loadDelete = true;
     const signalDelete : any = await this.bienService.deleteBien(idBient);
     if(signalDelete.status ==200){
+      const index = this.listBien.findIndex((bien : IBiens)=> bien._id == idBient);
+      if(index!=-1){
+        this.listBien= this.listBien.filter((bien: IBiens, i: number) => i !== index);
+      }
       this.loadDelete = false;
       this.notifs.openToastr("Bien supprimé avec success" , "Generate call" , 'success');
     }else{

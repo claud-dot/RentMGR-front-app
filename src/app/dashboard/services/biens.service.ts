@@ -43,7 +43,7 @@ export class BiensService {
     const options = {
       withCredentials: true,
     };
-    return this.http.post(`${environment.baseUrl}/property/delete/${idBien}`, options).toPromise();
+    return this.http.post(`${environment.baseUrl}/property/delete/${idBien}`, {}, options).toPromise();
   }
 
 }

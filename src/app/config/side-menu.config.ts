@@ -5,7 +5,7 @@ export const sideBarMenu =  [
         "icon": "gauge-high",
         "children": [
             {
-                "title": "Add/Edit",
+                "title": "Create Bien",
                 "icon": "newspaper",
                 "routerLink": "/bien/create"
             },
@@ -21,7 +21,7 @@ export const sideBarMenu =  [
         "icon": "scroll",
         "children": [
             {
-                "title": "Add/Edit",
+                "title": "Create Locataire",
                 "icon": "newspaper",
                 "routerLink": "/location/create"
             },

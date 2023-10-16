@@ -82,7 +82,11 @@ export class AuthComponent implements OnInit {
       const signalLogin : any = await this.authService.login(this.loginForm.value);
       if(signalLogin.status == 200){
         localStorage.setItem('current-user', JSON.stringify(signalLogin.data));
-        this.cookieService.set('RENT-AUTH' , signalLogin.data.authentification.sessionToken);
+        this.cookieService.set('RENT-AUTH' , signalLogin.data.authentification.sessionToken, 0.2,
+        '/',
+        undefined,
+        false,
+        'Strict');
         this.loading.login = false;
         this.notif.openToastr(signalLogin.message , 'Register', 'success');
         this.router.navigate(['/user-spaces/']);

@@ -1,28 +1,48 @@
 <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
+    <nav id="sidebar" >
       <div class="custom-menu">
-        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        <button type="button"  id="sidebarCollapse" class="btn btn-primary" >
           <i class="fa fa-bars"></i>
           <span class="sr-only">Toggle Menu</span>
         </button>
       </div>
-      <div class="p-4 pt-5">
-        <h1><a href="index.html" class="logo">Rent-Mgr</a></h1>
-        <ul class="list-unstyled components mb-5">
-          <li class="active" *ngFor="let menu of menuList; let i = index">
-            <a
-              [attr.data-bs-target]="'#menu' + i"
-              data-bs-toggle="collapse" aria-expanded="false" 
-              [class]="menu.children ? 'dropdown-toggle' : ''"
-              ><span class="mr-3"><i [class]="'fa-solid fa-'+menu.icon"></i></span>{{menu.title}}</a
-            >
-            <ul class="collapse list-unstyled" [id]="'menu'+i" *ngIf="menu.children">
-              <li *ngFor="let subMenu of menu.children">
-                <a [routerLink]="'/user-space/'+subMenu.routerLink"><span class="mr-3"><i [class]="'fa-solid fa-'+subMenu.icon"></i></span>{{subMenu.title}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class="p-4 pt-5 d-flex flex-column justify-content-between" style="height: 100%;">
+        <div class="head-side-bar">
+          <h1><a href="index.html" class="logo">Rent-Mgr</a></h1>
+          <hr>
+          <ul class="list-unstyled components mb-auto">
+            <li class="active" *ngFor="let menu of menuList; let i = index">
+              <a 
+                [href]="'#menu'+i" data-bs-toggle="collapse" aria-expanded="false"
+                (click)="toggleCollapse(i)"
+                [ngClass]="{ 'active-menu-parent': i === currentlyOpenItemIndex }"
+                [attr.aria-controls]="'menu'+i" 
+                [class]="menu.children ? 'dropdown-toggle' : ''"
+                style="position: relative;"
+                ><span class="mr-3"><i [class]="'fa-solid fa-'+menu.icon"></i></span>{{menu.title}}</a
+              >
+              <ul  class="collapse list-unstyled" [id]="'menu'+i" *ngIf="menu.children" [class.show]="i === currentlyOpenItemIndex">
+                <li *ngFor="let subMenu of menu.children">
+                  <a 
+                    [ngClass]="{ 'active-menu': isActive('/user-space' + subMenu.routerLink) }" 
+                    [routerLink]="'/user-space/'+subMenu.routerLink"><span class="mr-3">
+                      <i [class]="'fa-solid fa-'+subMenu.icon"></i></span>
+                      {{subMenu.title}}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="bottom-side-bar">
+          <hr>
+          <div class="content-log-out " (click)="onLogOut()" style="position: relative;">
+            <a type="button" class="btn d-flex justify-content-around">
+              <span><i class="fas fa-sign-out" aria-hidden="true"></i></span>
+              Se deconnecter
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
 

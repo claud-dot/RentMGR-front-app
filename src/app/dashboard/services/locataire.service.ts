@@ -49,7 +49,7 @@ export class LocataireService {
     const options = {
       withCredentials: true,
     };
-    return this.http.post(`${environment.baseUrl}/tenant/delete/${idLocation}`,options).toPromise();
+    return this.http.post(`${environment.baseUrl}/tenant/delete/${idLocation}`,{},options).toPromise();
   }
 
 

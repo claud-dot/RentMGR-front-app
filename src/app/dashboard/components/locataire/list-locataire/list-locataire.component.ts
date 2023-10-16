@@ -3,6 +3,7 @@ import { BiensService } from 'src/app/dashboard/services/biens.service';
 import { LocataireService } from 'src/app/dashboard/services/locataire.service';
 import { NotificationService } from 'src/app/dashboard/services/notification.service';
 import { IBiens } from 'src/app/interfaces/IBiens';
+import { ILocataire } from 'src/app/interfaces/ILocataire';
 import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
@@ -58,6 +59,10 @@ export class ListLocataireComponent implements OnInit {
     this.loadDelete = true;
     const signalDelete : any = await this.locationService.deleteLocataire(idLocation);
     if(signalDelete.status ==200){
+      const index = this.listLocation.findIndex((location : any)=> location.tenant._id == idLocation);
+      if(index!=-1){
+        this.listLocation = this.listLocation.filter((location: ILocataire, i: number) => i !== index);
+      } 
       this.loadDelete = false;
       this.notifs.openToastr("Locataire supprimé avec success" , "Generate call" , 'success');
     }else{
