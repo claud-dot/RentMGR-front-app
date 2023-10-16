@@ -43,6 +43,8 @@ export class CreateLocataireComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initForm();
+
     this.getListBiens();
 
     if (this.isEditMode) {
@@ -62,7 +64,6 @@ export class CreateLocataireComponent implements OnInit {
         this.loadingBien = false;
       }
 
-      this.initForm();
   }
 
   async getLocation(){

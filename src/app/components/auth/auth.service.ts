@@ -20,8 +20,13 @@ export class AuthService {
     }
 
     logOut(){
-        localStorage.removeItem('current-user');
-        this.cookieService.delete('RENT-AUTH');
+        localStorage.clear();
+        this.cookieService.deleteAll();
+    }
+
+    public sessionToken() {
+        const userData: any = JSON.parse(localStorage.getItem('current-user') as string);
+        return userData.authentification['sessionToken'];
     }
 
 }

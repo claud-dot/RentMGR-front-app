@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/dashboard/services/notification.service';
 import { CookieService } from 'ngx-cookie-service';
+import { BiensService } from 'src/app/dashboard/services/biens.service';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +23,7 @@ export class AuthComponent implements OnInit {
   registerForm !: FormGroup;
   loginForm !: FormGroup;
 
-  constructor(private fb : FormBuilder , private authService : AuthService , private router : Router , private notif : NotificationService , private cookieService: CookieService) { }
+  constructor(private fb : FormBuilder ,private bienservice :BiensService ,  private authService : AuthService , private router : Router , private notif : NotificationService , private cookieService: CookieService) { }
 
   initForm(){
     this.registerForm = this.fb.group({
