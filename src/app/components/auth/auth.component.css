@@ -740,4 +740,19 @@ label.valid:after {
   }
 }
 
+.error{
+  border-color: red;
+}
+
+.content-mesg{
+  position: absolute;
+  z-index: 1;
+  bottom : 1px;
+  font-size: 13px;
+}
+
+.content-mesg span{
+  color: #c06067 !important;
+}
+
 /*# sourceMappingURL=style.css.map */

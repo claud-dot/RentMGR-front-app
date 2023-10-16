@@ -76,7 +76,7 @@ export class AuthComponent implements OnInit {
   }
 
   async onLogin(){
-    this.registerForm.markAllAsTouched();
+    this.loginForm.markAllAsTouched();
     if(this.loginForm.valid){
       this.loading.login = true;
       const signalLogin : any = await this.authService.login(this.loginForm.value);
@@ -87,12 +87,20 @@ export class AuthComponent implements OnInit {
         undefined,
         false,
         'Strict');
-        this.loading.login = false;
-        this.notif.openToastr(signalLogin.message , 'Register', 'success');
         this.router.navigate(['/user-spaces/']);
       }else{
         this.loading.login = false;
-        this.notif.openToastr(signalLogin.message , 'Register', 'error');
+        if((signalLogin.message as string).toLocaleLowerCase().includes('email')){
+          this.loginForm.get('email')?.setErrors({ incorrectEmail: true });
+          console.log(signalLogin.message , "email");
+          
+        }else if((signalLogin.message as string).toLocaleLowerCase().includes('passe')){
+          this.loginForm.get('password')?.setErrors({ incorrectPassword: true });
+          console.log(signalLogin.message , "password");
+          
+        }else{
+          this.notif.openToastr(signalLogin.message , 'Login', 'error');
+        }
       }
     }
   }
