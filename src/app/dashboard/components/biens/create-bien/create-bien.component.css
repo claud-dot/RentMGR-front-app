@@ -1,3 +1,16 @@
 label{
     margin-bottom: 8px;
 }
+
+.ftco-section {
+    padding: 7em 0; }
+  
+.ftco-no-pt {
+padding-top: 0; }
+
+.ftco-no-pb {
+padding-bottom: 0; }
+
+.heading-section {
+font-size: 28px;
+color: #000; }

@@ -25,6 +25,13 @@ export class BiensService {
       return this.http.post(`${environment.baseUrl}/property/create/${idUser}`, bienData , options).toPromise();
   }
 
+  public getBienById(idBien : string){
+    const options = {
+      withCredentials: true,
+    };
+    return this.http.get(`${environment.baseUrl}/property/id/${idBien}`, options).toPromise();
+  }
+
   public updateBien(idBien : string,bienData : IBiens){
     const options = {
       withCredentials: true,
@@ -36,7 +43,7 @@ export class BiensService {
     const options = {
       withCredentials: true,
     };
-    return this.http.delete(`${environment.baseUrl}/property/update/${idBien}`, options).toPromise();
+    return this.http.post(`${environment.baseUrl}/property/delete/${idBien}`, options).toPromise();
   }
 
 }

@@ -11,6 +11,7 @@ import { IUser } from 'src/app/interfaces/IUser';
 })
 export class ListBienComponent implements OnInit {
   loading : boolean = false;
+  loadDelete : boolean = false;
   user : IUser;
   listBien : IBiens[] = [];
 
@@ -35,6 +36,18 @@ export class ListBienComponent implements OnInit {
         this.loading = false;
         this.notifs.openToastr(signalGet.message , "Get list Biens" , 'error');
       }
+  }
+
+  async onDeleteBien(idBient : string){
+    this.loadDelete = true;
+    const signalDelete : any = await this.bienService.deleteBien(idBient);
+    if(signalDelete.status ==200){
+      this.loadDelete = false;
+      this.notifs.openToastr("Bien supprimé avec success" , "Generate call" , 'success');
+    }else{
+      this.loadDelete = false;
+      this.notifs.openToastr(signalDelete.message , "Generate call" , 'error');
+    }
   }
 
 }

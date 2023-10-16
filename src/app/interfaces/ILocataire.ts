@@ -4,5 +4,6 @@ export interface ILocataire {
     nom : string,
     prenom : string,
     email : string,
-    telephone: string
+    telephone: string,
+    dateLocation : Date
 }

@@ -6,8 +6,18 @@
       </div>
     </div>
     <div class="row">
+      <div class="not-data" *ngIf="!loading && listBien.length<=0">
+        <h6 class="text-center">Aucun bien disponible , veuillez d'abbord en creé un <span><a routerLink="/user-space/bien/create">ici</a></span></h6>
+      </div>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="text-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12" style="height: 590px;
-      overflow: auto;">
+      overflow: auto;" *ngIf="listBien.length>0">
         <div class="table-wrap">
           <table class="table">
             <thead class="thead-dark">
@@ -28,24 +38,17 @@
                 <td>{{bien.surface}}</td>
                 <td>{{bien.adresse_postale}}</td>
                 <td align="right">
-                  <a href="#" class="edit mr-3" aria-label="Edit">
+                  <a [routerLink]="'/user-space/bien/edit/'+bien._id" class="edit mr-3" aria-label="Edit">
                     <span aria-hidden="true">
                       <i class="fa-solid fa-pen"></i>
                     </span>
                   </a>
-                  <a href="#" class="trash mr-3" style="color: #dc3545;"  aria-label="Close">
+                  <a  (click)="onDeleteBien(bien._id+'')" class="trash mr-3" style="color: #dc3545;"  aria-label="Close">
                     <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                   </a>
                 </td>
               </tr>
             </tbody>
-            <div *ngIf="loading" class="d-flex justify-content-center">
-              <div class="text-center">
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
           </table>
         </div>
       </div>

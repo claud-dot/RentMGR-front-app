@@ -20,6 +20,10 @@ import { RouterModule } from "@angular/router";
                 path : 'create',
                 component : CreateLocataireComponent,
             },
+            {
+                path : 'edit/:idLocation',
+                component : CreateLocataireComponent
+            },
             { path: '', redirectTo: 'list', pathMatch: 'full' },
         ])
     ],

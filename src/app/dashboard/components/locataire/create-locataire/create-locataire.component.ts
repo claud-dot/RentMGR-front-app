@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BiensService } from 'src/app/dashboard/services/biens.service';
 import { LocataireService } from 'src/app/dashboard/services/locataire.service';
 import { NotificationService } from 'src/app/dashboard/services/notification.service';
@@ -21,18 +21,33 @@ export class CreateLocataireComponent implements OnInit {
   listBien : IBiens[] = [];
   user : IUser;
 
+  //update
+  loadLocation : boolean = false;
+  isEditMode : boolean = false;
+  locationId !: string;
+
   constructor(
       private fb : FormBuilder , 
       private bienService : BiensService ,
-      private locatiobService : LocataireService,
-      private router : Router, 
+      private locationService : LocataireService,
+      private router : Router,
+      private activeRoute : ActivatedRoute, 
       private notif : NotificationService) {
     const userData = localStorage.getItem('current-user');
     this.user = userData ? JSON.parse(userData) : null;
+
+    this.activeRoute.paramMap.subscribe((params) => {
+      this.locationId = params.get('idLocation') as string;
+      this.isEditMode = !!this.locationId; // Si bienId est défini, c'est en mode édition
+    });
   }
 
   ngOnInit() {
     this.getListBiens();
+
+    if (this.isEditMode) {
+      this.getLocation();
+    }
   }
 
   async getListBiens(){
@@ -48,6 +63,26 @@ export class CreateLocataireComponent implements OnInit {
       }
 
       this.initForm();
+  }
+
+  async getLocation(){
+    this.loadLocation = true;
+    const signalFind : any = await this.locationService.getLocationById(this.locationId);
+    if(signalFind.status ==200){
+      const location = signalFind.data;
+      this.createForm.patchValue({
+        idProperty : location.idProperty,
+        nom : location.nom,
+        prenom : location.prenom,
+        email : location.email,
+        telephone : location.telephone
+      })
+      this.loadLocation = false;
+    }else{
+      this.notif.openToastr(signalFind.message , "Get Location" , 'error');
+      this.router.navigate(['/user-space/location/list']);
+      this.loadLocation = false;
+    }
   }
 
   initForm(){
@@ -68,8 +103,9 @@ export class CreateLocataireComponent implements OnInit {
     this.createForm.markAllAsTouched();
     if(this.createForm.valid){
       this.loading = true;
-      const location : ILocataire = this.createForm.value;
-      const signalCreate : any = await this.locatiobService.addLocataire(location); 
+      let location : ILocataire = this.createForm.value;
+      location.dateLocation = new Date();
+      const signalCreate : any = this.isEditMode ? await this.locationService.updateLocataire(this.locationId,location)  : await this.locationService.addLocataire(location); 
       if(signalCreate!=null && signalCreate.status == 200){
         this.loading = false;
         this.notif.openToastr(signalCreate.message , 'Create biens' , 'success');

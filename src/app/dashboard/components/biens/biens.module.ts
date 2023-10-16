@@ -20,6 +20,10 @@ import { RouterModule } from "@angular/router";
                 path : 'create',
                 component : CreateBienComponent,
             },
+            {
+                path : 'edit/:idBien',
+                component : CreateBienComponent,
+            },
             { path: '', redirectTo: 'list', pathMatch: 'full' },
         ])
     ],

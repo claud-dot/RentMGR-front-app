@@ -1,55 +1,68 @@
-<div class="content-form container">
-  <div class="content-title">
-    <h2>Ajouter un nouveau location</h2>
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center mb-5">
+        <h2>{{ isEditMode ?'Modifier l\'information du location' : 'Ajouter un nouveau location'}}</h2>
+      </div>
+    </div>
+    <div class="form-create">
+        <div class="not-data" *ngIf="!loadingBien && listBien.length<=0">
+          <h6 class="text-center">Aucun bien disponible , veuillez d'abbord en creé un <span><a routerLink="/user-space/bien/create">ici</a></span></h6>
+        </div>
+        <div *ngIf="loadingBien" class="d-flex justify-content-center">
+          <div class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      <form [formGroup]="createForm" *ngIf="!loadingBien && listBien.length>0">
+        <div class="form-group mb-3">
+          <label>Bien</label>
+          <select class="form-control" formControlName="idProperty" [(ngModel)]="bienSelected" (change)="onSelectType($event)">
+            <option [value]="bien._id" *ngFor="let bien of listBien">{{bien.type +' à '+bien.adresse_postale}}</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label>Nom</label>
+          <input [ngClass]="{
+            'error' : (createForm.controls['nom'].touched ||
+                        createForm.controls['nom'].dirty ) &&
+                        createForm.controls['nom'].errors && 
+                        createForm.controls['nom'].errors['required'] }" type="text" class="form-control" formControlName="nom" >
+        </div>
+        <div class="form-group mb-3">
+          <label>Prenom</label>
+          <input [ngClass]="{
+            'error' : (createForm.controls['prenom'].touched ||
+                        createForm.controls['prenom'].dirty ) &&
+                        createForm.controls['prenom'].errors && 
+                        createForm.controls['prenom'].errors['required'] }" type="text" class="form-control" formControlName="prenom" >
+        </div>
+        <div class="form-group mb-3">
+          <label>Email</label>
+          <input [ngClass]="{
+            'error' : (createForm.controls['email'].touched ||
+                        createForm.controls['email'].dirty ) &&
+                        createForm.controls['email'].errors && 
+                        createForm.controls['email'].errors['required'] }" type="text" class="form-control" formControlName="email" >
+        </div>
+        <div class="form-group mb-3">
+          <label>Telephone</label>
+          <input [ngClass]="{
+            'error' : (createForm.controls['telephone'].touched ||
+                        createForm.controls['telephone'].dirty ) &&
+                        createForm.controls['telephone'].errors && 
+                        createForm.controls['telephone'].errors['required'] }" type="text" class="form-control" formControlName="telephone" >
+        </div>
+        <div class="content-button d-flex justify-content-end">
+            <input type="submit" value="Valider" *ngIf="!loading" (click)="onSubmit()" class="btn btn-btn btn-primary" />
+            <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="form-create">
-     <form [formGroup]="createForm" *ngIf="!loadingBien">
-      <div class="form-group mb-3">
-        <label>Bien</label>
-        <select class="form-control" formControlName="idProperty" [(ngModel)]="bienSelected" (change)="onSelectType($event)">
-          <option [value]="bien._id" *ngFor="let bien of listBien">{{bien.type +' à '+bien.adresse_postale}}</option>
-        </select>
-      </div>
-      <div class="form-group mb-3">
-        <label>Nom</label>
-        <input [ngClass]="{
-          'error' : (createForm.controls['nom'].touched ||
-                      createForm.controls['nom'].dirty ) &&
-                      createForm.controls['nom'].errors && 
-                      createForm.controls['nom'].errors['required'] }" type="text" class="form-control" formControlName="nom" >
-      </div>
-      <div class="form-group mb-3">
-        <label>Prenom</label>
-        <input [ngClass]="{
-          'error' : (createForm.controls['prenom'].touched ||
-                      createForm.controls['prenom'].dirty ) &&
-                      createForm.controls['prenom'].errors && 
-                      createForm.controls['prenom'].errors['required'] }" type="text" class="form-control" formControlName="prenom" >
-      </div>
-      <div class="form-group mb-3">
-        <label>Email</label>
-        <input [ngClass]="{
-          'error' : (createForm.controls['email'].touched ||
-                      createForm.controls['email'].dirty ) &&
-                      createForm.controls['email'].errors && 
-                      createForm.controls['email'].errors['required'] }" type="text" class="form-control" formControlName="email" >
-      </div>
-      <div class="form-group mb-3">
-        <label>Telephone</label>
-        <input [ngClass]="{
-          'error' : (createForm.controls['telephone'].touched ||
-                      createForm.controls['telephone'].dirty ) &&
-                      createForm.controls['telephone'].errors && 
-                      createForm.controls['telephone'].errors['required'] }" type="text" class="form-control" formControlName="telephone" >
-      </div>
-      <div class="content-button d-flex justify-content-end">
-          <input type="submit" value="Valider" *ngIf="!loading" (click)="onSubmit()" class="btn btn-btn btn-primary" />
-          <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-          </button>
-      </div>
-     </form>
-  </div>
-
-</div>
+</section>
