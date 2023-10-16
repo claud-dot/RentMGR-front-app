@@ -57,8 +57,6 @@ export class LayoutComponent implements OnInit {
   }
 
   isActive(route: string) {
-    console.log("Route ", this.router.url , route , this.router.url == route);
-    
     return this.router.url == route;
   }
   
